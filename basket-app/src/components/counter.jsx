@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 
+//this must be a CONTROLLED COMPONENT:
+//it receive all the data from the parent component, and it raise events when the components need to be updated
+//all the data modification must be done in the parent component
 class Counter extends Component {
-  state = {
-    value: this.props.counter.value
-  };
-
+  //the state has been removed because it is a controlled component
+  /*
   handleIncrement = () => {
-    //console.log(product);
     this.setState({ value: this.state.value + 1 }); //setState tell react that there have been an update!
-  };
+  };*/
 
   render() {
     return (
       <div>
         <span className={this.getBadgeClasses()}>{this.formatCount()}</span>
         <button
-          onClick={() => this.handleIncrement()}
+          onClick={() => this.props.onIncrement(this.props.counter)}
           className="btn btn-secondary btn-sm"
         >
           Increment
@@ -32,12 +32,12 @@ class Counter extends Component {
 
   getBadgeClasses() {
     let classes = "badge m-2 badge-"; //hold all the common classes description
-    classes += this.state.value === 0 ? "warning" : "primary";
+    classes += this.props.counter.value === 0 ? "warning" : "primary";
     return classes;
   }
 
   formatCount() {
-    const { value: count } = this.state;
+    const { value: count } = this.props.counter;
     return count === 0 ? "Zero" : count;
   }
 }

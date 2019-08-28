@@ -13,19 +13,42 @@ class Counters extends Component {
     ]
   };
 
+  handleIncrement = counter => {
+    const updatedCounters = [...this.state.counters];
+    const index = updatedCounters.indexOf(counter);
+    updatedCounters[index] = { ...counter };
+    updatedCounters[index].value++;
+    this.setState({ counters: updatedCounters });
+  };
+
   handleDelete = counterId => {
     console.log("handleEvent called", counterId);
     const updtedCounters = this.state.counters.filter(c => c.id !== counterId);
     this.setState({ counters: updtedCounters });
   };
 
+  handleReset = () => {
+    const updatedCounters = this.state.counters.map(c => {
+      c.value = 0;
+      return c;
+    });
+    this.setState({ counter: updatedCounters });
+  };
+
   render() {
     return (
       <div>
+        <button
+          onClick={this.handleReset}
+          className="btn btn-primary btn-sm m-2"
+        >
+          Reset
+        </button>
         {this.state.counters.map(counter => (
           <Counter
             key={counter.id}
             onDelete={this.handleDelete}
+            onIncrement={this.handleIncrement}
             counter={counter}
           />
         ))}
